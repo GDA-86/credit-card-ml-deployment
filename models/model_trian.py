@@ -82,7 +82,7 @@ class My_Featur_Engineering(BaseEstimator, TransformerMixin):
 
         return X
 
-def load_mmodel(name):
+def load_model(name):
     # Десериализуем pipeline из файла
     with open('name', 'rb') as pkl_file:
         loaded_pipe = pickle.load(pkl_file)

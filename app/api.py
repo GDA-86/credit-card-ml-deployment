@@ -2,9 +2,13 @@ from flask import Flask, request, jsonify
 import pickle
 import numpy as np
 
+from models.model_trian import load_model
+
 app = Flask(__name__)
 
 # Загрузка модели при старте
+#model = load_model('models/model_v1.pkl') - так ругается на методы модели
+
 with open('models/model_v1.pkl', 'rb') as f:
     model = pickle.load(f)
 
