@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 import pickle
 import numpy as np
 
-from models.model_trian import load_model
+#from models.model_trian import load_model
+
+from models.transformers import My_Featur_Engineering
 
 app = Flask(__name__)
 
