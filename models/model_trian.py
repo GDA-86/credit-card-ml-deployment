@@ -3,17 +3,12 @@
 import pandas as pd
 import numpy as np
 import pickle
-import math
 
 from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.datasets import load_diabetes
 from sklearn.feature_selection import SelectKBest, f_regression
-
 from sklearn.metrics import classification_report
-
 from sklearn.ensemble import GradientBoostingClassifier
-
 
 import tkinter as tk
 from tkinter import messagebox
