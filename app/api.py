@@ -4,7 +4,7 @@ import numpy as np
 
 #from models.model_trian import load_model
 
-from models.transformers import My_Featur_Engineering
+from transformers import My_Featur_Engineering
 
 app = Flask(__name__)
 
@@ -38,8 +38,10 @@ def health():
 
 def preprocess_input(data):
     """Предобработка входных данных"""
-    # Преобразование JSON в numpy array
+    # Преобразование JSON в numpy array 
     features = np.array([data[key] for key in sorted(data.keys())]).reshape(1, -1)
+
+    
     return features
 
 if __name__ == '__main__':

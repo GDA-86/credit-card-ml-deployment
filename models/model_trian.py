@@ -55,7 +55,7 @@ def dump_model(name, model):
 def train_model(X, y):
     
     lo_pipe = Pipeline([  
-    ('FeatureEngineering', My_Featur_Engineering()),
+    ('FeatureEngineering', My_Featur_Engineering()),   
     ('FeatureSelection', SelectKBest(f_regression, k=5)),
     ('GradientBoostingClassifier', GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, max_depth=3,random_state=42))
     ])
@@ -86,6 +86,7 @@ def main_with_report():
     go_pipe = train_model(X, y)
 
     my_classification_report(go_pipe, X, y)
+
 
 
 def main_with_dump_model():
