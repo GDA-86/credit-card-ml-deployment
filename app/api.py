@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
+import pandas as pd
 
 #from models.model_trian import load_model
 
@@ -11,7 +12,7 @@ app = Flask(__name__)
 # Загрузка модели при старте
 #model = load_model('models/model_v1.pkl') - так ругается на методы модели
 
-with open('models/model_v1.pkl', 'rb') as f:
+with open('models/model_v2.pkl', 'rb') as f:
     model = pickle.load(f)
 
 @app.route('/predict', methods=['POST'])
@@ -26,7 +27,7 @@ def predict():
         return jsonify({
             'prediction': int(prediction[0]),
             'probability': float(probability),
-            'model_version': 'v1'
+            'model_version': 'v2'
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -39,8 +40,36 @@ def health():
 def preprocess_input(data):
     """Предобработка входных данных"""
     # Преобразование JSON в numpy array 
-    features = np.array([data[key] for key in sorted(data.keys())]).reshape(1, -1)
 
+    features = pd.DataFrame([data[0]])
+
+    features = features.astype({
+        'ID'       : 'int64',
+        'LIMIT_BAL': 'float64',
+        'SEX'      : 'int64',
+        'EDUCATION': 'float64',
+        'MARRIAGE' : 'int64',
+        'AGE'      : 'float64',
+        'PAY_0'    : 'float64',
+        'PAY_2'    : 'float64',
+        'PAY_3'    : 'float64',
+        'PAY_4'    : 'float64',
+        'PAY_5'    : 'float64',
+        'PAY_6'    : 'float64',
+        'BILL_AMT1': 'float64',
+        'BILL_AMT2': 'float64',
+        'BILL_AMT3': 'float64',
+        'BILL_AMT4': 'float64',
+        'BILL_AMT5': 'float64',
+        'BILL_AMT6': 'float64',
+        'PAY_AMT1' : 'float64',
+        'PAY_AMT2' : 'float64',
+        'PAY_AMT3' : 'float64',
+        'PAY_AMT4' : 'float64',
+        'PAY_AMT5' : 'float64',         
+        'PAY_AMT6' : 'float64',
+    })
+    
     
     return features
 

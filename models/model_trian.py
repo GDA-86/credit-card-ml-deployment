@@ -1,7 +1,7 @@
 
 #--------------------------------------------Import--------------------------------------------#
 import pandas as pd
-
+import numpy as np
 import pickle
 
 from sklearn.pipeline import Pipeline
@@ -88,6 +88,10 @@ def main_with_report():
     my_classification_report(go_pipe, X, y)
 
 
+    predictions = go_pipe.predict(X)
+
+    np.savetxt("data.csv", predictions, delimiter=",", fmt='%f', header="col1,col2", comments='')
+
 
 def main_with_dump_model():
     go_train = read_df()
@@ -95,7 +99,7 @@ def main_with_dump_model():
     X = go_train.drop(columns='default.payment.next.month')
     y = go_train['default.payment.next.month']
 
-    gv_name = 'models/model_v1.pkl'
+    gv_name = 'models/model_v2.pkl'
 
     go_pipe = train_model(X, y)
 
