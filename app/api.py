@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
 import pandas as pd
@@ -32,10 +32,52 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/predict_', methods=['GET'])
+def predict_get():
+    """Проверка через get """
+
+    #http://localhost:5000/predict?ID=0&LIMIT_BAL=70000&SEX=2&EDUCATION=2&MARRIAGE=2&AGE=26&PAY_0=2
+    # &PAY_2=0&PAY_3=0&PAY_4=2&PAY_5=2&PAY_6=2&BILL_AMT1=41087&BILL_AMT2=42445&BILL_AMT3=45020&BILL_AMT4=44006
+    # &BILL_AMT5=46905&BILL_AMT6=46012&PAY_AMT1=2007&PAY_AMT2=3582&PAY_AMT3=0&PAY_AMT4=3601&PAY_AMT5=0&PAY_AMT6=1820
+    try:
+        data = request.args.to_dict()
+        
+        for key in data:
+            try:
+                data[key] = float(data[key])
+            except ValueError:
+                pass
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+    features = pd.DataFrame([data])
+
+    prediction = model.predict(features)
+    probability = model.predict_proba(features)[0][1]
+    
+    return jsonify({'received_data': data, 
+                    'status': 'ok',
+                    'prediction': int(prediction[0]),
+                    'probability' : float(probability),
+                    'model_version': 'v2'
+                    })
+    
+
+
 @app.route('/health', methods=['GET'])
 def health():
     """Проверка здоровья сервиса"""
     return jsonify({'status': 'healthy'}), 200
+
+
+
+
 
 def preprocess_input(data):
     """Предобработка входных данных"""

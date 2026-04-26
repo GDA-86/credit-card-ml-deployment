@@ -3,11 +3,12 @@
 
 # Игнорировать временные файлы Python
 __pycache__/
+
 *.pyc
-
-
 
 *.csv
 
 #*.ipynb
 
+
+*venv/
