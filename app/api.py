@@ -5,7 +5,7 @@ import pandas as pd
 
 #from models.model_trian import load_model
 
-from transformers import My_Featur_Engineering
+from my_transformers import My_Featur_Engineering
 
 app = Flask(__name__)
 
@@ -49,7 +49,7 @@ def predict_get():
         
         for key in data:
             try:
-                data[key] = float(data[key])
+                data[key] = float(data[key]) # type: ignore
             except ValueError:
                 pass
     except Exception as e:
