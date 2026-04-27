@@ -1,0 +1,6 @@
+services:
+  creditcardmldeployment:
+    image: creditcardmldeployment
+    build:
+      context: .
+      dockerfile: ./Dockerfile
